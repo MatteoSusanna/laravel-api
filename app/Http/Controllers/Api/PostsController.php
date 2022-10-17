@@ -16,11 +16,20 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::with(['category', 'tags'])->paginate(2);
+        
+        //aggiunta immagini
+        foreach($posts as $post){
+            if($post->cover){
+                $post->cover = asset('storage/' . $post->cover);
+            }
+        }
 
         return response()->json([
             'status' => true,
             'results' => $posts
         ]);
+
+
 
     }
 
