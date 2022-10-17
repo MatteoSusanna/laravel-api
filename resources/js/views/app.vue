@@ -1,13 +1,19 @@
 <template>
     <div>
-        <h1>lavori in corso</h1>
-        <a href="/admin">Area Amministrativa</a>
+        <MyHeader />
+        <MyMain />
     </div>
 </template>
 
 <script>
-export default {
-    name: 'App',
-    components: { }
-}
+    import MyHeader from '../components/MyHeader.vue'
+    import MyMain from '../components/MyMain.vue'
+
+    export default {
+        name: 'App',
+        components: { 
+            MyHeader,
+            MyMain,
+        }
+    }
 </script>
