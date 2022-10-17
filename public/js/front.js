@@ -2112,9 +2112,9 @@ var render = function render() {
   }, [_vm._v("Next")])])])]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {
     return _c("div", {
       key: index,
-      staticClass: "card col-12 my-4",
+      staticClass: "card my-4",
       staticStyle: {
-        width: "18rem"
+        width: "50rem"
       }
     }, [_c("img", {
       staticClass: "card-img-top",

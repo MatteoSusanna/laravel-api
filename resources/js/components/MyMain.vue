@@ -14,7 +14,7 @@
             </ul>
         </nav>
 
-        <div class="card col-12 my-4" style="width: 18rem;" v-for="(post, index) in posts" :key="index">
+        <div class="card my-4" style="width: 50rem;" v-for="(post, index) in posts" :key="index">
             <img :src="post.cover" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title"><strong>Name: </strong>{{post.name}}</h5>
