@@ -1944,21 +1944,28 @@ __webpack_require__.r(__webpack_exports__);
   name: 'MyMain',
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      lastPage: null,
+      curretPage: 1
     };
   },
   methods: {
-    apiFunction: function apiFunction() {
+    apiFunction: function apiFunction(page) {
       var _this = this;
 
-      axios.get('/api/posts').then(function (res) {
-        _this.posts = res.data.results;
-        console.log(res.data.results);
+      axios.get('/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (res) {
+        _this.posts = res.data.results.data;
+        _this.lastPage = res.data.results.data.last_page;
+        _this.curretPage = res.data.results.data.current_page;
       });
     }
   },
   mounted: function mounted() {
-    this.apiFunction();
+    this.apiFunction(1);
   }
 });
 
@@ -2070,7 +2077,35 @@ var render = function render() {
     staticClass: "container"
   }, [_c("h2", {
     staticClass: "my-4"
-  }, [_vm._v("Posts")]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {
+  }, [_vm._v("Posts")]), _vm._v(" "), _c("nav", [_c("ul", {
+    staticClass: "pagination"
+  }, [_c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    "class": _vm.curretPage == 1 ? "disabled" : "",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.apiFunction(_vm.curretPage--);
+      }
+    }
+  }, [_vm._v("Previous")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    "class": _vm.curretPage == _vm.lastPage ? "disabled" : "",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.apiFunction(_vm.curretPage++);
+      }
+    }
+  }, [_vm._v("Next")])])])]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {
     return _c("div", {
       key: index,
       staticClass: "card col-12 my-4"
@@ -2082,12 +2117,16 @@ var render = function render() {
       staticClass: "card-text"
     }, [_c("strong", [_vm._v("Content: ")]), _vm._v(_vm._s(post.content))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_c("strong", [_vm._v("Category: ")]), _vm._v(_vm._s(post.category.name))]), _vm._v(" "), _c("a", {
+    }, [_c("strong", [_vm._v("Category: ")]), _vm._v(_vm._s(post.category.name))]), _vm._v(" "), _vm._l(post.tags, function (tag, index) {
+      return _c("p", {
+        key: index
+      }, [_vm._v("Tag: " + _vm._s(tag.name))]);
+    }), _vm._v(" "), _c("a", {
       staticClass: "btn btn-primary",
       attrs: {
         href: "#"
       }
-    }, [_vm._v("More..")])])]);
+    }, [_vm._v("More..")])], 2)]);
   })], 2);
 };
 

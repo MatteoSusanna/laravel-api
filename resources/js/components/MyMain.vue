@@ -1,11 +1,25 @@
 <template>
     <div class="container">
+        
         <h2 class="my-4">Posts</h2>
+        
+        <nav>
+            <ul class="pagination ">
+                <li class="page-item">
+                    <a class="page-link" :class="(curretPage==1)?'disabled':''" href="#" @click="apiFunction(curretPage --)">Previous</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" :class="(curretPage==lastPage)?'disabled':''" href="#" @click="apiFunction(curretPage ++)">Next</a>
+                </li>
+            </ul>
+        </nav>
+
         <div class="card col-12 my-4" v-for="(post, index) in posts" :key="index">
             <div class="card-body">
                 <h5 class="card-title"><strong>Name: </strong>{{post.name}}</h5>
                 <p class="card-text"><strong>Content: </strong>{{post.content}}</p>
                 <p class="card-text"><strong>Category: </strong>{{post.category.name}}</p>
+                <p v-for="(tag, index) in post.tags" :key="index" >Tag: {{tag.name}}</p>
                 <a href="#" class="btn btn-primary">More..</a>
             </div>
         </div>
@@ -18,18 +32,27 @@
         data(){
             return{
                 posts: [],
+                lastPage: null,
+                curretPage: 1,
             }
         },
         methods:{
-            apiFunction(){
-                axios.get('/api/posts').then(res => {
-                    this.posts = res.data.results;
-                    console.log(res.data.results);
+            apiFunction(page){
+                axios.get('/api/posts', {
+                    params:{
+                        page: page,
+                    }
+                })
+                .then(res => {
+                    this.posts = res.data.results.data;
+
+                    this.lastPage = res.data.results.data.last_page;
+                    this.curretPage = res.data.results.data.current_page;
                 })
             }
         },
         mounted(){
-            this.apiFunction();
+            this.apiFunction(1);
         },
     }
 </script>
