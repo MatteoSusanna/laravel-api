@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         
-        <h2 class="my-4">Posts</h2>
+        <h1 class="my-4 text-center">Posts</h1>
         
-        <nav>
-            <ul class="pagination ">
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination">
                 <li class="page-item" :class="(curretPage == 1)?'disabled':''">
                     <a class="page-link" href="#" @click.prevent="apiFunction(curretPage - 1)">Previous</a>
                 </li>
@@ -14,7 +14,14 @@
             </ul>
         </nav>
 
-        <div class="card my-4" style="width: 50rem;" v-for="(post, index) in posts" :key="index">
+        <div class="d-flex justify-content-center" v-if="spinner">
+            <div class="spinner-border text-secondary" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+
+        <div class="card m-auto g-4 my_card" style="width: 40rem;" v-for="(post, index) in posts" :key="index" v-else>
             <img :src="post.cover" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title"><strong>Name: </strong>{{post.name}}</h5>
@@ -24,6 +31,7 @@
                 <a href="#" class="btn btn-primary">More..</a>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -35,10 +43,12 @@
                 posts: [],
                 lastPage: null,
                 curretPage: 1,
+                spinner: true,
             }
         },
         methods:{
             apiFunction(page){
+                this.spinner = true;
                 axios.get('/api/posts', {
                     params:{
                         page: page,
@@ -50,10 +60,9 @@
                     this.lastPage = res.data.results.last_page;
                     this.curretPage = res.data.results.current_page;
 
-                    console.log(res.data.results.last_page);
-                    console.log(res.data.results.current_page);
+                    this.spinner = false;
                 })
-            }
+            },
         },
         mounted(){
             this.apiFunction(1);
@@ -62,5 +71,7 @@
 </script>
 
 <style>
-
+    .my_card{
+        margin-bottom: 25px !important;
+    }
 </style>
