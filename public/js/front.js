@@ -1959,8 +1959,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         _this.posts = res.data.results.data;
-        _this.lastPage = res.data.results.data.last_page;
-        _this.curretPage = res.data.results.data.current_page;
+        _this.lastPage = res.data.results.last_page;
+        _this.curretPage = res.data.results.current_page;
+        console.log(res.data.results.last_page);
+        console.log(res.data.results.current_page);
       });
     }
   },
@@ -2080,29 +2082,31 @@ var render = function render() {
   }, [_vm._v("Posts")]), _vm._v(" "), _c("nav", [_c("ul", {
     staticClass: "pagination"
   }, [_c("li", {
-    staticClass: "page-item"
+    staticClass: "page-item",
+    "class": _vm.curretPage == 1 ? "disabled" : ""
   }, [_c("a", {
     staticClass: "page-link",
-    "class": _vm.curretPage == 1 ? "disabled" : "",
     attrs: {
       href: "#"
     },
     on: {
       click: function click($event) {
-        return _vm.apiFunction(_vm.curretPage--);
+        $event.preventDefault();
+        return _vm.apiFunction(_vm.curretPage - 1);
       }
     }
   }, [_vm._v("Previous")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
+    staticClass: "page-item",
+    "class": _vm.curretPage == _vm.lastPage ? "disabled" : ""
   }, [_c("a", {
     staticClass: "page-link",
-    "class": _vm.curretPage == _vm.lastPage ? "disabled" : "",
     attrs: {
       href: "#"
     },
     on: {
       click: function click($event) {
-        return _vm.apiFunction(_vm.curretPage++);
+        $event.preventDefault();
+        return _vm.apiFunction(_vm.curretPage + 1);
       }
     }
   }, [_vm._v("Next")])])])]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {

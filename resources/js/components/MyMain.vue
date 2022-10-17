@@ -5,11 +5,11 @@
         
         <nav>
             <ul class="pagination ">
-                <li class="page-item">
-                    <a class="page-link" :class="(curretPage==1)?'disabled':''" href="#" @click="apiFunction(curretPage --)">Previous</a>
+                <li class="page-item" :class="(curretPage == 1)?'disabled':''">
+                    <a class="page-link" href="#" @click.prevent="apiFunction(curretPage - 1)">Previous</a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" :class="(curretPage==lastPage)?'disabled':''" href="#" @click="apiFunction(curretPage ++)">Next</a>
+                <li class="page-item" :class="(curretPage == lastPage)?'disabled':''">
+                    <a class="page-link" href="#" @click.prevent="apiFunction(curretPage + 1)">Next</a>
                 </li>
             </ul>
         </nav>
@@ -46,8 +46,11 @@
                 .then(res => {
                     this.posts = res.data.results.data;
 
-                    this.lastPage = res.data.results.data.last_page;
-                    this.curretPage = res.data.results.data.current_page;
+                    this.lastPage = res.data.results.last_page;
+                    this.curretPage = res.data.results.current_page;
+
+                    console.log(res.data.results.last_page);
+                    console.log(res.data.results.current_page);
                 })
             }
         },
