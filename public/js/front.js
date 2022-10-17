@@ -2066,7 +2066,29 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("div", {
+    staticClass: "container"
+  }, [_c("h2", {
+    staticClass: "my-4"
+  }, [_vm._v("Posts")]), _vm._v(" "), _vm._l(_vm.posts, function (post, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "card col-12 my-4"
+    }, [_c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title"
+    }, [_c("strong", [_vm._v("Name: ")]), _vm._v(_vm._s(post.name))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_c("strong", [_vm._v("Content: ")]), _vm._v(_vm._s(post.content))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_c("strong", [_vm._v("Category: ")]), _vm._v(_vm._s(post.category.name))]), _vm._v(" "), _c("a", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        href: "#"
+      }
+    }, [_vm._v("More..")])])]);
+  })], 2);
 };
 
 var staticRenderFns = [];
